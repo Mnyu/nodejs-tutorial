@@ -4,16 +4,22 @@ const http = require('http');
 
 const server = http.createServer((req, res) => {
   if (req.url === '/') {
-    res.end('Welcome to our homepage');
+    res.writeHead(200, { 'content-type' : 'text/html' });
+    res.write('<h1>Homepage</h1>');
+    res.end();
   }
-  if (req.url === '/about') {
-    res.end('Here is our short history');
+  else if (req.url === '/about') {
+    res.writeHead(200, { 'content-type' : 'text/html' });
+    res.write('<h3>Here is our short history</h3>');
+    res.end();
   }
-  res.end(`
-    <h1>Oops!</h1>
+  else {
+    res.writeHead(404, { 'content-type' : 'text/html' });
+    res.write(`<h1>Oops!</h1>
     <p>We can't seem to find the page you are looking for.</p>
-    <a href="/">Back Home</a>
-  `);
+    <a href="/">Back Home</a>`);
+    res.end();
+  }
 })
 
 server.listen(5000);
